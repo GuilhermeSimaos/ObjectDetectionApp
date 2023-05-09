@@ -41,7 +41,7 @@ function App(){
             formData.append('image', blob, 'my-photo.jpg');
 
             // Use axios to post to endpoint
-            axios.post('http://18.228.137.219/post-photo', formData)
+            axios.post('https://objdetectionserver-production.up.railway.app/post-photo', formData)
             .then((response) => {
                 console.log('Image sent successfully!');
             })
@@ -58,7 +58,7 @@ function App(){
     // Get processed photo from backend
     const getProcessedPhoto = () => {
         // Points to the endpoint specifying the response type
-        axios.get('http://18.228.137.219/get-processed-photo', {responseType: 'blob'})
+        axios.get('https://objdetectionserver-production.up.railway.app/get-processed-photo', {responseType: 'blob'})
         .then(response => {
             // Converts blob to file then read it
             const reader = new FileReader();
