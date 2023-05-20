@@ -88,6 +88,9 @@ function App(){
             };
             reader.readAsDataURL(response.data);
             setHideButton(true);
+
+            // Delete temporary files from backend
+            await axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
         }catch(error){
             console.log(error);
         }
