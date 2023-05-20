@@ -24,7 +24,7 @@ function App(){
     };
 
     // Take photo from the current video stream
-    const takePhoto = () => {
+    const takePhoto = async () => {
         // Define canvas with a high resolution
         let canvas = document.createElement('canvas');
         canvas.width = cameraSettings.width;
@@ -35,31 +35,42 @@ function App(){
         ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
         // Converts to Blob and send to backend
-        canvas.toBlob((blob) => {
+        canvas.toBlob(async (blob) => {
             // Add in a formData
             const formData = new FormData();
             formData.append('image', blob, 'my-photo.jpg');
 
             // Use axios to post to endpoint
-            axios.post('https://objdetectionserver-production.up.railway.app/post-photo', formData)
-            .then((response) => {
+            try{
+                await axios.post('https://objdetectionserver-production.up.railway.app/post-photo', formData);
                 console.log('Image sent successfully!');
-            })
-            .catch((error) => {
-                console.log('Error sending image!!!', error);
-            });
+            }catch(error){
+                console.log(error);
+            }
+
+            // Wait a certain time before calling getProcessedPhoto
+            await new Promise(resolve => setTimeout(resolve,1000));
+
+            // Call getProcessedPhoto after the interval
+            await getProcessedPhoto();
+            
+            // axios.post('https://objdetectionserver-production.up.railway.app/post-photo', formData)
+            // .then((response) => {
+            //     console.log('Image sent successfully!');
+            // })
+            // .catch((error) => {
+            //     console.log('Error sending image!!!', error);
+            // });
         });
-        // Set a timer to ask for GET photo
-        setTimeout(() => {
-            getProcessedPhoto();
-        }, 3000);
+        
     };
 
     // Get processed photo from backend
-    const getProcessedPhoto = () => {
-        // Points to the endpoint specifying the response type
-        axios.get('https://objdetectionserver-production.up.railway.app/get-processed-photo', {responseType: 'blob'})
-        .then(response => {
+    const getProcessedPhoto = async () => {
+        try{
+            // Send a GET requisition to the specified endpoint with the response type
+            const response = await axios.get('https://objdetectionserver-production.up.railway.app/get-processed-photo', {responseType: 'blob'})
+        
             // Converts blob to file then read it
             const reader = new FileReader();
             reader.onload = () =>{
@@ -76,12 +87,34 @@ function App(){
                 img.src = reader.result;  
             };
             reader.readAsDataURL(response.data);
-            setHideButton(true)
-        }).catch(error => {
+            setHideButton(true);
+        }catch(error){
             console.log(error);
-        });
+        }
+        // // Points to the endpoint specifying the response type
+        // axios.get('https://objdetectionserver-production.up.railway.app/get-processed-photo', {responseType: 'blob'})
+        // .then(response => {
+        //     // Converts blob to file then read it
+        //     const reader = new FileReader();
+        //     reader.onload = () =>{
+        //         const img = new Image();
+        //         img.onload = () => {
+        //             // Draw image on canvas element
+        //             const canvas = photoRef.current;
+        //             canvas.width = img.width;
+        //             canvas.height = img.height;
+        //             const context = canvas.getContext('2d');
+        //             context.drawImage(img, 0, 0);
+        //             setHasPhoto(true);
+        //         };
+        //         img.src = reader.result;  
+        //     };
+        //     reader.readAsDataURL(response.data);
+        //     setHideButton(true)
+        // }).catch(error => {
+        //     console.log(error);
+        // });
     }
-
 
     // Clear canvas from the taken photo
     const closePhoto = () =>{setHasPhoto(false);setHideButton(false)};
