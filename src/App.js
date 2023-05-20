@@ -92,14 +92,14 @@ function App(){
     return (
         <div className="App">
             <div className="camera">
-                <h1>Webcam POV</h1>
+                <h1>Webcam</h1>
                 <video ref={videoRef}></video>
             </div>
             <button hidden={hideButton} onClick={takePhoto}>Tirar Foto</button>
             <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
-                <h1>Photo</h1>
+                <h1>Foto Processada</h1>
                 <canvas ref={photoRef}></canvas>
-                <button onClick={closePhoto}>Apagar</button>
+                <button onClick={closePhoto}>Apagar Foto</button>
             </div>
         </div>
     );
