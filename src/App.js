@@ -59,8 +59,9 @@ function App(){
     const getProcessedPhoto = async () => {
         try{
             // Send a GET requisition to the specified endpoint with the response type
-            const response = await axios.get('https://objdetectionserver-production.up.railway.app/get-processed-photo', {responseType: 'blob'})
-           
+            let response = await axios.get('https://objdetectionserver-production.up.railway.app/get-processed-photo', {responseType: 'blob'})
+            console.log('Image received successfully!')
+            
             // Converts blob to file then read it
             const reader = new FileReader();
            
@@ -81,8 +82,9 @@ function App(){
             setHideButton(true);
 
             // Delete temporary files from backend
-            await axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
-        
+            response = await axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
+            console.log('Delete instruction sent!')
+
         }catch(error){
             console.log(error);
         }
