@@ -49,7 +49,7 @@ function App(){
             }
 
             // Wait a certain time before calling getProcessedPhoto
-            await new Promise(resolve => setTimeout(resolve,1000));
+            // await new Promise(resolve => setTimeout(resolve,1000));
 
             // Call getProcessedPhoto after the interval
             await getProcessedPhoto();
