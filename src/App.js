@@ -48,19 +48,9 @@ function App(){
                 console.log(error);
             }
 
-            // Wait a certain time before calling getProcessedPhoto
-            // await new Promise(resolve => setTimeout(resolve,1000));
-
             // Call getProcessedPhoto after the interval
             await getProcessedPhoto();
             
-            // axios.post('https://objdetectionserver-production.up.railway.app/post-photo', formData)
-            // .then((response) => {
-            //     console.log('Image sent successfully!');
-            // })
-            // .catch((error) => {
-            //     console.log('Error sending image!!!', error);
-            // });
         });
         
     };
@@ -70,9 +60,10 @@ function App(){
         try{
             // Send a GET requisition to the specified endpoint with the response type
             const response = await axios.get('https://objdetectionserver-production.up.railway.app/get-processed-photo', {responseType: 'blob'})
-        
+           
             // Converts blob to file then read it
             const reader = new FileReader();
+           
             reader.onload = () =>{
                 const img = new Image();
                 img.onload = () => {
@@ -91,6 +82,7 @@ function App(){
 
             // Delete temporary files from backend
             await axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
+        
         }catch(error){
             console.log(error);
         }
