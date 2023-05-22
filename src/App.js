@@ -77,6 +77,10 @@ function App(){
             };
             reader.readAsDataURL(response.data);
             setHideButton(true);
+
+            // Delete temporary files from backend
+            const response = axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
+            console.log(response);
         }).catch(error => {
             console.log(error);
         });
@@ -86,9 +90,6 @@ function App(){
     const closePhoto = () =>{
         setHasPhoto(false);
         setHideButton(false);
-        // Delete temporary files from backend
-        const response = axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
-        console.log(response);
     };
 
     useEffect(() => {getVideo();}, [videoRef]);
