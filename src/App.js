@@ -103,7 +103,7 @@ function App(){
             <button hidden={hideButton} onClick={takePhoto}>Tirar Foto</button>
             <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
                 <h1>Foto Processada</h1>
-                <canvas></canvas>
+                <canvas ref={photoRef}></canvas>
                 <button onClick={closePhoto}>Apagar Foto</button>
             </div>
         </div>
