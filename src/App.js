@@ -80,41 +80,19 @@ function App(){
             };
             reader.readAsDataURL(response.data);
             setHideButton(true);
-
-            // Delete temporary files from backend
-            response = await axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
-            console.log('Delete instruction sent!')
-
         }catch(error){
             console.log(error);
         }
-        // // Points to the endpoint specifying the response type
-        // axios.get('https://objdetectionserver-production.up.railway.app/get-processed-photo', {responseType: 'blob'})
-        // .then(response => {
-        //     // Converts blob to file then read it
-        //     const reader = new FileReader();
-        //     reader.onload = () =>{
-        //         const img = new Image();
-        //         img.onload = () => {
-        //             // Draw image on canvas element
-        //             const canvas = photoRef.current;
-        //             canvas.width = img.width;
-        //             canvas.height = img.height;
-        //             const context = canvas.getContext('2d');
-        //             context.drawImage(img, 0, 0);
-        //             setHasPhoto(true);
-        //         };
-        //         img.src = reader.result;  
-        //     };
-        //     reader.readAsDataURL(response.data);
-        //     setHideButton(true)
-        // }).catch(error => {
-        //     console.log(error);
-        // });
     }
 
     // Clear canvas from the taken photo
-    const closePhoto = () =>{setHasPhoto(false);setHideButton(false)};
+    const closePhoto = () =>{
+        setHasPhoto(false);
+        setHideButton(false)
+        // Delete temporary files from backend
+        axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
+        console.log('Delete instruction sent!')
+    };
 
     useEffect(() => {getVideo();}, [videoRef]);
 
