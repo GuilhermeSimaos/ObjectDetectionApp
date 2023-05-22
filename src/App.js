@@ -43,7 +43,7 @@ function App(){
             // Use axios to post to endpoint
             axios.post('https://objdetectionserver-production.up.railway.app/post-photo', formData)
             .then((response) => {
-                console.log('Image sent successfully!');
+                console.log(response);
             })
             .catch((error) => {
                 console.log('Error sending image!!!', error);
@@ -82,75 +82,13 @@ function App(){
         });
     }
 
-    // // Take photo from the current video stream
-    // const takePhoto = async () => {
-    //     // Define canvas with a high resolution
-    //     let canvas = document.createElement('canvas');
-    //     canvas.width = cameraSettings.width;
-    //     canvas.height = cameraSettings.height;
-
-    //     // Draw the photo on the canvas
-    //     let ctx = canvas.getContext('2d');
-    //     ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-
-    //     // Converts to Blob and send to backend
-    //     canvas.toBlob(async (blob) => {
-    //         // Add in a formData
-    //         const formData = new FormData();
-    //         formData.append('image', blob, 'my-photo.jpg');
-
-    //         // Use axios to post to endpoint
-    //         try{
-    //             await axios.post('https://objdetectionserver-production.up.railway.app/post-photo', formData);
-    //             console.log('Image sent successfully!');
-    //         }catch(error){
-    //             console.log(error);
-    //         }
-
-    //         // Call getProcessedPhoto after the interval
-    //         await getProcessedPhoto();
-            
-    //     });
-        
-    // };
-
-    // // Get processed photo from backend
-    // const getProcessedPhoto = async () => {
-    //     try{
-    //         // Send a GET requisition to the specified endpoint with the response type
-    //         let response = await axios.get('https://objdetectionserver-production.up.railway.app/get-processed-photo', {responseType: 'blob'})
-    //         console.log('Image received successfully!')
-            
-    //         // Converts blob to file then read it
-    //         const reader = new FileReader();
-           
-    //         reader.onload = () =>{
-    //             const img = new Image();
-    //             img.onload = () => {
-    //                 // Draw image on canvas element
-    //                 const canvas = photoRef.current;
-    //                 canvas.width = img.width;
-    //                 canvas.height = img.height;
-    //                 const context = canvas.getContext('2d');
-    //                 context.drawImage(img, 0, 0);
-    //                 setHasPhoto(true);
-    //             };
-    //             img.src = reader.result;  
-    //         };
-    //         reader.readAsDataURL(response.data);
-    //         setHideButton(true);
-    //     }catch(error){
-    //         console.log(error);
-    //     }
-    // }
-
     // Clear canvas from the taken photo
     const closePhoto = () =>{
         setHasPhoto(false);
         setHideButton(false)
         // Delete temporary files from backend
-        axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
-        console.log('Delete instruction sent!')
+        const response = axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
+        console.log(response)
     };
 
     useEffect(() => {getVideo();}, [videoRef]);
