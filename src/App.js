@@ -85,10 +85,10 @@ function App(){
     // Clear canvas from the taken photo
     const closePhoto = () =>{
         setHasPhoto(false);
-        setHideButton(false)
+        setHideButton(false);
         // Delete temporary files from backend
-        const response = axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
-        console.log(response)
+        // const response = axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
+        // console.log(response);
     };
 
     useEffect(() => {getVideo();}, [videoRef]);
@@ -103,7 +103,7 @@ function App(){
             <button hidden={hideButton} onClick={takePhoto}>Tirar Foto</button>
             <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
                 <h1>Foto Processada</h1>
-                <canvas ref={photoRef}></canvas>
+                <canvas></canvas>
                 <button onClick={closePhoto}>Apagar Foto</button>
             </div>
         </div>
