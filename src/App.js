@@ -52,7 +52,7 @@ function App(){
         // Set a timer to ask for GET photo
         setTimeout(() => {
             getProcessedPhoto();
-        }, 3000);
+        }, 5000);
     };
 
     // Get processed photo from backend
