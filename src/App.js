@@ -7,7 +7,7 @@ function App(){
 
     async function fetchData() {
         try{
-            let response = await axios.get('https://objdetectionserver-production.up.railway.app/api/data');
+            let response = await axios.get('https://objdetectionserver-production.up.railway.app:8000/api/data');
             setData(response.data);
             setFocusedButton('clear')
         }catch (error){
