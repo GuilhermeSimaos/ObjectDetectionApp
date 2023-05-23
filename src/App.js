@@ -43,7 +43,7 @@ const takePhoto = async () => {
   
       // Use axios to post to endpoint
       try {
-        await axios.post('https://objdetectionserver-production.up.railway.app/post-photo', formData);
+        await axios.post('http://localhost:8000/post-photo', formData);
         console.log('Image sent successfully!');
       } catch (error) {
         console.log('Error sending image!!!', error);
@@ -61,7 +61,7 @@ const takePhoto = async () => {
   const getProcessedPhoto = async () => {
     // Points to the endpoint specifying the response type
     try {
-      const response = await axios.get('https://objdetectionserver-production.up.railway.app/get-processed-photo', { responseType: 'blob' });
+      const response = await axios.get('http://localhost:8000/get-processed-photo', { responseType: 'blob' });
       // Converts blob to file then read it
       const reader = new FileReader();
       reader.onload = () => {
@@ -90,7 +90,7 @@ const takePhoto = async () => {
     setHideButton(false);
     // Delete temporary files from backend
     try {
-      const response = await axios.delete('https://objdetectionserver-production.up.railway.app/delete-files');
+      const response = await axios.delete('http://localhost:8000/delete-files');
       console.log(response);
     } catch (error) {
       console.log(error);
