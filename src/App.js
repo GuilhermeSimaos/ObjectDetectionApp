@@ -109,10 +109,15 @@ const takePhoto = async () => {
         <video ref={videoRef}></video>
       </div>
       <button hidden={hideButton} onClick={takePhoto}>Tirar Foto</button>
-      <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
-        <h1>Foto Processada</h1>
-        <canvas ref={photoRef}></canvas>
-        <button onClick={closePhoto}>Apagar Foto</button>
+      <div className='canvas'>
+        <div className={'result' + (hasPhoto ? 'hasPhoto' : '')}>
+          <h1>Foto Processada</h1>
+          <canvas ref={photoRef}></canvas>
+          <button onClick={closePhoto}>Apagar Foto</button>
+        </div>
+      </div>
+      <div className='programmer' style={{position:'absolute',bottom:'20px', right:'10px', paddingTop:'30px'}}>
+        <p style={{color:'#FF4F84', fontWeight:'bolder'}}>Guilherme Simão Barbosa da Silva - PUC Minas 2023</p>
       </div>
     </div>
   );
